@@ -1,0 +1,6 @@
+DB_URL=mongodb+srv://deepeshajaykasa_db_user:DL4vUJoL5RGvnChS@blog-app-backend.vb73t3k.mongodb.net/?appName=blog-app-backend
+PORT = 3000
+JWT_SECRET=qwertyuiop
+CLOUD_NAME=dvxhyb5va
+API_KEY=312193686521161
+API_SECRET=YuB9AVCUVLouatdTdGNs7in8pY8
