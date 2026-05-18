@@ -21,7 +21,7 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5173",
   "https://blog-app-frontend-taupe-zeta.vercel.app",
-  "https://blog-app-backend-1-9pqo.onrender.com"
+  "*"
 ];
 
 if (process.env.FRONTEND_URL) {
