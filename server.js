@@ -20,8 +20,7 @@ app.set("trust proxy", 1);
 const allowedOrigins = [
   "http://localhost:5173",
   "http://127.0.0.1:5173",
-  "https://blog-app-frontend-taupe-zeta.vercel.app",
-  "*"
+  "https://blog-app-frontend-8b9drj14y-deepesh-7879s-projects.vercel.app/",
 ];
 
 if (process.env.FRONTEND_URL) {
@@ -44,17 +43,22 @@ app.use(
       if (!origin) return callback(null, true);
       
       const normalizedOrigin = origin.replace(/\/$/, "");
+
+      // Check exact match against allowed origins list
       if (normalizedAllowedOrigins.includes(normalizedOrigin)) {
         return callback(null, true);
-      } else {
-        console.warn(`CORS blocked request from origin: ${origin}`);
-        // Instead of returning an error which might skip header setting, 
-        // we return null, false which tells CORS middleware to not allow it
-        return callback(null, false);
       }
+
+      // Allow any Vercel preview deployment URL for your project
+      if (/\.vercel\.app$/.test(normalizedOrigin)) {
+        return callback(null, true);
+      }
+
+      console.warn(`CORS blocked request from origin: ${origin}`);
+      return callback(null, false);
     },
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
     optionsSuccessStatus: 200
   })
