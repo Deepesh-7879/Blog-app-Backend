@@ -94,14 +94,13 @@ authorApp.patch("/articles/:id/status", verifyToken("AUTHOR"), async (req, res) 
   const { isArticleActive } = req.body;
   // Find article
   const article = await articleModel.findById(id).populate("author", "firstName email profileImageUrl");
-  console.log(article);
   if (!article) {
     return res.status(404).json({ message: "Article not found" });
   }
 
-  //console.log(req.user.userId,article.author.toString())
+  const articleAuthorId = article.author?._id?.toString() ?? article.author?.toString();
   // AUTHOR can only modify their own articles
-  if (req.user.role === "AUTHOR" && article.author.toString() !== req.user.userId) {
+  if (req.user.role === "AUTHOR" && articleAuthorId !== req.user.userId) {
     return res.status(403).json({ message: "Forbidden. You can only modify your own articles" });
   }
   // Already in requested state
